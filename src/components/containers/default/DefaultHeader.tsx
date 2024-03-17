@@ -1,6 +1,6 @@
 import { Button, Layout, Menu } from 'antd';
 import { Link, useLocation } from 'react-router-dom';
-import { UserOutlined, PoweroffOutlined } from '@ant-design/icons';
+import { UserOutlined, PoweroffOutlined, UserAddOutlined } from '@ant-design/icons';
 import { useAppDispatch, useAppSelector } from "../../../hooks/redux";
 import ButtonGroup from "antd/es/button/button-group";
 import { logout } from "../../../store/accounts/accounts.slice.ts";
@@ -47,11 +47,18 @@ const DefaultHeader = () => {
                 </ButtonGroup>
 
             ) : (
-                <Link to="/login" style={{ color: 'inherit', textDecoration: 'none' }}>
-                    <Button type="primary" icon={<UserOutlined />}>
-                        Увійти
-                    </Button>
-                </Link>
+                <div style={{ display: 'flex', gap: '1%' }}>
+                    <Link to="/login" style={{ color: 'inherit', textDecoration: 'none' }}>
+                        <Button icon={<UserOutlined />}>
+                            Login
+                        </Button>
+                    </Link>
+                    <Link to="/register" style={{ color: 'inherit', textDecoration: 'none' }}>
+                        <Button type="primary" icon={<UserAddOutlined />}>
+                            Register
+                        </Button>
+                    </Link>
+                </div>
             )}
 
         </Header>

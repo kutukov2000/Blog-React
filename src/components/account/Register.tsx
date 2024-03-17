@@ -1,25 +1,25 @@
 import React from 'react';
 import { Button, Image, Divider, Flex, Form, Input, Row, Typography, message, Spin } from 'antd';
 import logo from '../../assets/login.png';
-import { ILogin } from '../../interfaces/account';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
-import { login } from '../../store/accounts/accounts.actions.ts';
 import { Link, useNavigate } from 'react-router-dom';
 import { unwrapResult } from '@reduxjs/toolkit';
 import { useNotification } from '../../hooks/notification';
 import { Status } from '../../utils/enums';
+import { IRegister } from "../../interfaces/account";
+import { register } from "../../store/accounts/accounts.actions.ts";
 
-const Login: React.FC = () => {
+const Register: React.FC = () => {
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
     const [messageApi, contextHolder] = message.useMessage();
     const { handleError } = useNotification(messageApi);
     const status = useAppSelector(state => state.account.status);
 
-    const onFinish = async (values: ILogin) => {
+    const onFinish = async (values: IRegister) => {
+        console.log("values", values)
         try {
-            const response = await dispatch(login(values));
-            console.log(response)
+            const response = await dispatch(register(values));
             unwrapResult(response);
             navigate('/');
         } catch (error) {
@@ -51,6 +51,55 @@ const Login: React.FC = () => {
                         autoComplete="off"
                     >
                         <Form.Item
+                            name="firstName"
+                            label="First Name"
+                            rules={[
+                                {
+                                    min: 3,
+                                    message: 'The length of First Name must be at least 3 symbols',
+                                },
+                                {
+                                    required: true,
+                                    message: 'Please, enter an First Name!',
+                                },
+                            ]}
+                        >
+                            <Input />
+                        </Form.Item>
+                        <Form.Item
+                            name="lastName"
+                            label="Last Name"
+                            rules={[
+                                {
+                                    min: 3,
+                                    message: 'The length of Last Name must be at least 3 symbols',
+                                },
+                                {
+                                    required: true,
+                                    message: 'Please, enter an Last Name!',
+                                },
+                            ]}
+                        >
+                            <Input />
+                        </Form.Item>
+
+                        <Form.Item
+                            name="phone"
+                            label="Phone"
+                            rules={[
+                                {
+                                    min: 10,
+                                    message: 'The length of Phone must be at least 10 symbols',
+                                },
+                                {
+                                    required: true,
+                                    message: 'Please, enter an Phone!',
+                                },
+                            ]}
+                        >
+                            <Input />
+                        </Form.Item>
+                        <Form.Item
                             name="email"
                             label="Email"
                             rules={[
@@ -60,7 +109,7 @@ const Login: React.FC = () => {
                                 },
                                 {
                                     required: true,
-                                    message: 'Будь ласка введіть ваш e-mail!',
+                                    message: 'Please, enter an e-mail!',
                                 },
                             ]}
                         >
@@ -70,20 +119,28 @@ const Login: React.FC = () => {
                         <Form.Item
                             label="Password"
                             name="password"
-                            rules={[{ required: true, message: 'Будь ласка введіть ваш пароль!' }]}
+                            rules={[{ required: true, message: 'Please enter a password!' }]}
+                        >
+                            <Input.Password />
+                        </Form.Item>
+
+                        <Form.Item
+                            label="Confirm Password"
+                            name="confirmPassword"
+                            rules={[{ required: true, message: 'Please confirm a password!' }]}
                         >
                             <Input.Password />
                         </Form.Item>
 
                         <Form.Item style={{ display: 'flex', justifyContent: 'center' }}>
                             <Button size="large" type="primary" htmlType="submit" style={{ paddingInline: 50 }}>
-                                Вхід
+                                Реєструватися
                             </Button>
                         </Form.Item>
 
                         <Form.Item wrapperCol={{ span: 24 }}>
                             <Typography style={{ textAlign: 'center' }}>
-                                Немає аккаунта? <Link to="/register">Створити зараз!</Link>
+                                Аккаунта є? <Link to="/login">Війти зараз!</Link>
                             </Typography>
                         </Form.Item>
                     </Form>
@@ -93,4 +150,4 @@ const Login: React.FC = () => {
     );
 };
 
-export default Login;
+export default Register;
