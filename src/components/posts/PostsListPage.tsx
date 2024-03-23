@@ -2,10 +2,12 @@ import { useEffect, useState } from "react";
 import { Link, useParams, useSearchParams } from "react-router-dom";
 import { IPostItem } from "./types";
 import { apiClient } from "../../utils/api/apiClient";
-import { Button, Col, Row, message } from "antd";
+import { Button, Col, Row, Select, message } from "antd";
 import PostCard from "./PostCard";
 import { useAppSelector } from "../../hooks/redux";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
+
+const sortOptions = ['title', 'postedOn']
 
 const PostListPage = () => {
     const { id } = useParams();
@@ -13,8 +15,17 @@ const PostListPage = () => {
     const categoryName = searchParams.get("categoryName");
 
     const [posts, setPosts] = useState<IPostItem[]>([]);
+    const [sortBy, setSortBy] = useState<string>('postedOn');
 
     const { isLogin } = useAppSelector(state => state.account);
+
+    const sortedPosts = sortBy ? [...posts].sort((a, b) => {
+        if (sortBy === 'title') {
+            return a.title.localeCompare(b.title);
+        } else {
+            return a.postedOn.localeCompare(b.postedOn);
+        }
+    }) : posts;
 
     useEffect(() => {
         const fetchData = async () => {
@@ -40,17 +51,31 @@ const PostListPage = () => {
         }
     }
 
+    const handleSortBySelect = (value: string) => setSortBy(value);
+
     return (
         <>
             <h1>{categoryName}</h1>
 
+            <Select
+                placeholder="Select a category"
+                defaultValue={sortBy}
+                onChange={handleSortBySelect}
+            >
+                {sortOptions.map((option) => (
+                    <Select.Option key={option} value={option}>
+                        {option}
+                    </Select.Option>
+                ))}
+            </Select>
+
             <Row gutter={16}>
                 <Col span={24}>
                     <Row>
-                        {posts.length === 0 ? (
+                        {sortedPosts.length === 0 ? (
                             <h2>Список пустий</h2>
                         ) : (
-                            posts.map((post) =>
+                            sortedPosts.map((post) =>
                                 <div style={{ width: '100%', margin: 10 }}>
                                     <Link to={`../post/${post.id}/${post.urlSlug}`} style={{ width: '40%', margin: 10 }}>
                                         <PostCard key={post.id} item={post} />
