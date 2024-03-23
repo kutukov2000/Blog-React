@@ -1,18 +1,21 @@
-import { Col, Row } from "antd";
+import { Button, Col, Row } from "antd";
 import { useEffect, useState } from "react";
 import CategoryCard from "./CategoryCard.tsx";
 import { ICategoryItem } from "./types.ts";
 import { apiClient } from "../../utils/api/apiClient.ts";
 import { Link } from "react-router-dom";
+import { useAppSelector } from "../../hooks/redux/index.ts";
+import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 
 const CategoryListPage = () => {
     const [categories, setCategories] = useState<ICategoryItem[]>([]);
+
+    const { isAdmin } = useAppSelector(state => state.account);
 
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const response = await apiClient.get<ICategoryItem[]>('api/categories');
-                console.log("response.data", response.data)
                 setCategories(response.data);
             } catch (error) {
                 console.error('Error fetching categories:', error);
@@ -21,6 +24,15 @@ const CategoryListPage = () => {
 
         fetchData();
     }, []);
+
+    const handleCategoryDelete = async (categoryId: number) => {
+        try {
+            await apiClient.delete(`api/categories/${categoryId}`);
+            setCategories(prevCategories => prevCategories.filter(category => category.id !== categoryId));
+        } catch (error) {
+            console.error('Error deleting categories:', error);
+        }
+    }
 
     return (
         <>
@@ -33,9 +45,20 @@ const CategoryListPage = () => {
                             <h2>Список пустий</h2>
                         ) : (
                             categories.map((category) =>
-                                <Link to={`category/${category.id}/${category.urlSlug}?categoryName=${category.name}`} style={{ width: '40%', margin: 10 }}>
-                                    <CategoryCard key={category.id} item={category} />
-                                </Link>
+                                <div>
+                                    <Link to={`category/${category.id}/${category.urlSlug}?categoryName=${category.name}`} style={{ width: '40%', margin: 10 }}>
+                                        <CategoryCard key={category.id} item={category} />
+                                    </Link>
+                                    {isAdmin ?
+                                        <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+                                            <Button icon={<EditOutlined />} style={{ borderColor: 'orange', color: 'orange' }}>Edit</Button>
+                                            <Button
+                                                onClick={() => handleCategoryDelete(category.id)}
+                                                icon={<DeleteOutlined />}
+                                                danger>Delete</Button>
+                                        </div>
+                                        : <></>}
+                                </div>
                             )
                         )}
                     </Row>
