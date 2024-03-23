@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import CategoryCard from "./CategoryCard.tsx";
 import { ICategoryItem } from "./types.ts";
 import { apiClient } from "../../utils/api/apiClient.ts";
+import { Link } from "react-router-dom";
 
 const CategoryListPage = () => {
     const [categories, setCategories] = useState<ICategoryItem[]>([]);
@@ -31,8 +32,10 @@ const CategoryListPage = () => {
                         {categories.length === 0 ? (
                             <h2>Список пустий</h2>
                         ) : (
-                            categories.map((item) =>
-                                <CategoryCard key={item.id} item={item} />,
+                            categories.map((category) =>
+                                <Link to={`category/${category.id}/${category.urlSlug}`} style={{ width: '40%', margin: 10 }}>
+                                    <CategoryCard key={category.id} item={category} />
+                                </Link>
                             )
                         )}
                     </Row>

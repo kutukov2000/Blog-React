@@ -1,3 +1,9 @@
 body {
   margin: 0;
 }
+
+#categoryCard {
+  padding: 10;
+  width: 100%;
+  max-width: 100% !important
+}

@@ -1,26 +1,27 @@
 import { Card, Col, Typography } from "antd";
 import Meta from "antd/es/card/Meta";
-import { ICategoryItem } from "./types";
+import { IPostItem } from "./types";
 
 const { Title } = Typography;
 
-interface ICategoryCardProps {
-    item: ICategoryItem
+interface IPostCardProps {
+    item: IPostItem
 }
 
-const CategoryCard: React.FC<ICategoryCardProps> = (props) => {
+const PostCard: React.FC<IPostCardProps> = (props) => {
     const { item } = props;
-    const { name, description } = item;
+    const { title, description } = item;
+
 
     return (
         <>
-            <Col id="categoryCard" xxl={4} lg={8} md={8} sm={12}>
+            <Col style={{ padding: 10 }} xxl={4} lg={8} md={8} sm={12}>
                 <Card
                     bodyStyle={{ flex: '1', paddingBlock: '10px' }}
                     style={{ height: 180, display: 'flex', flexDirection: 'column', paddingTop: '40px' }}
                     hoverable >
                     <Meta
-                        title={name}
+                        title={title}
                         description={
                             <Title level={5} type="success">{description.substring(0, 35)} ...</Title>
                         } />
@@ -30,4 +31,4 @@ const CategoryCard: React.FC<ICategoryCardProps> = (props) => {
     )
 }
 
-export default CategoryCard;
+export default PostCard;
