@@ -45,18 +45,18 @@ const CategoryListPage = () => {
                             <h2>Список пустий</h2>
                         ) : (
                             categories.map((category) =>
-                                <div>
-                                    <Link to={`category/${category.id}/${category.urlSlug}?categoryName=${category.name}`} style={{ width: '40%', margin: 10 }}>
+                                <div style={{ width: '40%', margin: 10 }}>
+                                    <Link to={`category/${category.id}/${category.urlSlug}?categoryName=${category.name}`}>
                                         <CategoryCard key={category.id} item={category} />
                                     </Link>
                                     {isAdmin ?
                                         <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
                                             <Link to={`category/edit/${category.id}`}>
-                                                <Button 
-                                                icon={<EditOutlined />} 
-                                                style={{ borderColor: 'orange', color: 'orange' }}>
+                                                <Button
+                                                    icon={<EditOutlined />}
+                                                    style={{ borderColor: 'orange', color: 'orange' }}>
                                                     Edit
-                                                    </Button>
+                                                </Button>
                                             </Link>
                                             <Button
                                                 onClick={() => handleCategoryDelete(category.id)}
