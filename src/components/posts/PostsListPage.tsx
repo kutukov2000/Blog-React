@@ -29,6 +29,15 @@ const PostListPage = () => {
         fetchData();
     }, []);
 
+    const handlePostDelete = async (postId: number) => {
+        try {
+            await apiClient.delete(`api/posts/${postId}`);
+            setPosts(prevPosts => prevPosts.filter(post => post.id !== postId));
+        } catch (error) {
+            console.error('Error deleting post:', error);
+        }
+    }
+
     return (
         <>
             <h1>{categoryName}</h1>
@@ -54,11 +63,11 @@ const PostListPage = () => {
                                                 </Button>
                                             </Link>
                                             <Button
+                                                onClick={() => handlePostDelete(post.id)}
                                                 icon={<DeleteOutlined />}
                                                 danger>Delete</Button>
                                         </div>
-                                    )
-                                    }
+                                    )}
                                 </div>
                             )
                         )}
