@@ -10,7 +10,7 @@ const DefaultSider = () => {
         token: { colorBgContainer },
     } = theme.useToken();
 
-    const { isAdmin } = useAppSelector(state => state.account);
+    const { isLogin, isAdmin } = useAppSelector(state => state.account);
     console.log("isAdmin: ", isAdmin)
 
     const menuItems = [{
@@ -24,6 +24,14 @@ const DefaultSider = () => {
             key: '2',
             icon: <PlusCircleOutlined />,
             label: <Link to={'/category/create'}>Create category</Link>
+        });
+    }
+
+    if (isLogin) {
+        menuItems.push({
+            key: '3',
+            icon: <PlusCircleOutlined />,
+            label: <Link to={'/post/create'}>Create post</Link>
         });
     }
 

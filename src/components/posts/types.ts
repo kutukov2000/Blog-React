@@ -10,3 +10,12 @@ export interface IPostItem {
     modified: string;
     categoryId: number;
 }
+
+export interface IPostCreate {
+    title: string;
+    shortDescription: string;
+    description: string;
+    meta: string;
+    published: boolean;
+    categoryId: number;
+}

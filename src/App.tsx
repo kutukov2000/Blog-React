@@ -7,6 +7,7 @@ import PostListPage from "./components/posts/PostsListPage"
 import PostPage from "./components/posts/PostPage"
 import EditCategoryPage from "./components/categories/EditCategoryPage"
 import CategoryCreatePage from "./components/categories/CategoryCreatePage"
+import PostCreatePage from "./components/posts/PostCreatePage"
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
           <Route path={"category/create"} element={<CategoryCreatePage />} />
 
           <Route path={"post/:id/:urlSlug"} element={<PostPage />} />
+          <Route path={"post/create"} element={<PostCreatePage />} />
 
         </Route>
       </Routes>
