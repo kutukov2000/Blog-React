@@ -51,7 +51,13 @@ const CategoryListPage = () => {
                                     </Link>
                                     {isAdmin ?
                                         <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-                                            <Button icon={<EditOutlined />} style={{ borderColor: 'orange', color: 'orange' }}>Edit</Button>
+                                            <Link to={`category/edit/${category.id}`}>
+                                                <Button 
+                                                icon={<EditOutlined />} 
+                                                style={{ borderColor: 'orange', color: 'orange' }}>
+                                                    Edit
+                                                    </Button>
+                                            </Link>
                                             <Button
                                                 onClick={() => handleCategoryDelete(category.id)}
                                                 icon={<DeleteOutlined />}

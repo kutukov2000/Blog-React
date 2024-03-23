@@ -4,3 +4,9 @@ export interface ICategoryItem {
     description: string;
     urlSlug: string;
 }
+
+export interface ICategoryEdit{
+    id: number;
+    name: string;
+    description: string;
+}
