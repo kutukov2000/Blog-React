@@ -2,8 +2,10 @@ import { useEffect, useState } from "react";
 import { Link, useParams, useSearchParams } from "react-router-dom";
 import { IPostItem } from "./types";
 import { apiClient } from "../../utils/api/apiClient";
-import { Col, Row } from "antd";
+import { Button, Col, Row } from "antd";
 import PostCard from "./PostCard";
+import { useAppSelector } from "../../hooks/redux";
+import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 
 const PostListPage = () => {
     const { id } = useParams();
@@ -11,6 +13,8 @@ const PostListPage = () => {
     const categoryName = searchParams.get("categoryName");
 
     const [posts, setPosts] = useState<IPostItem[]>([]);
+
+    const { isLogin } = useAppSelector(state => state.account);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -36,9 +40,26 @@ const PostListPage = () => {
                             <h2>Список пустий</h2>
                         ) : (
                             posts.map((post) =>
-                                <Link to={`../post/${post.id}/${post.urlSlug}`} style={{ width: '40%', margin: 10 }}>
-                                    <PostCard key={post.id} item={post} />
-                                </Link>
+                                <div style={{ width: '100%', margin: 10 }}>
+                                    <Link to={`../post/${post.id}/${post.urlSlug}`} style={{ width: '40%', margin: 10 }}>
+                                        <PostCard key={post.id} item={post} />
+                                    </Link>
+                                    {isLogin && (
+                                        <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+                                            <Link to={`../post/edit/${post.id}`}>
+                                                <Button
+                                                    icon={<EditOutlined />}
+                                                    style={{ borderColor: 'orange', color: 'orange' }}>
+                                                    Edit
+                                                </Button>
+                                            </Link>
+                                            <Button
+                                                icon={<DeleteOutlined />}
+                                                danger>Delete</Button>
+                                        </div>
+                                    )
+                                    }
+                                </div>
                             )
                         )}
                     </Row>

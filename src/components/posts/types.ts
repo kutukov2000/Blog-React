@@ -19,3 +19,12 @@ export interface IPostCreate {
     published: boolean;
     categoryId: number;
 }
+
+export interface IPostEdit {
+    title: string;
+    shortDescription: string;
+    description: string;
+    meta: string;
+    published: boolean;
+    categoryId: number;
+}
