@@ -1,5 +1,6 @@
 import { Layout, Menu, theme } from "antd";
 import { UnorderedListOutlined } from "@ant-design/icons";
+import { Link } from "react-router-dom";
 
 const { Sider } = Layout;
 
@@ -11,7 +12,7 @@ const DefaultSider = () => {
     const menuItems = [{
         key: '1',
         icon: <UnorderedListOutlined />,
-        label: 'Categories list'
+        label: <Link to={'/'}>Categories List</Link>
     }];
 
     return (
