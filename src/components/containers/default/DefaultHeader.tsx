@@ -4,6 +4,7 @@ import { UserOutlined, PoweroffOutlined, UserAddOutlined } from '@ant-design/ico
 import { useAppDispatch, useAppSelector } from "../../../hooks/redux";
 import ButtonGroup from "antd/es/button/button-group";
 import { logout } from "../../../store/accounts/accounts.slice.ts";
+import { BackButton } from '../../featured/BackButton.tsx';
 
 const { Header } = Layout;
 
@@ -20,6 +21,8 @@ const DefaultHeader = () => {
     return (
         <Header style={{ display: 'flex', alignItems: 'center' }}>
             <div className="demo-logo" />
+            <BackButton />
+
             <Menu
                 theme="dark"
                 mode="horizontal"

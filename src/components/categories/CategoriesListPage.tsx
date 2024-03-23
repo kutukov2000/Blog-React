@@ -33,7 +33,7 @@ const CategoryListPage = () => {
                             <h2>Список пустий</h2>
                         ) : (
                             categories.map((category) =>
-                                <Link to={`category/${category.id}/${category.urlSlug}`} style={{ width: '40%', margin: 10 }}>
+                                <Link to={`category/${category.id}/${category.urlSlug}?categoryName=${category.name}`} style={{ width: '40%', margin: 10 }}>
                                     <CategoryCard key={category.id} item={category} />
                                 </Link>
                             )

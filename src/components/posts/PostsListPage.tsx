@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useSearchParams } from "react-router-dom";
 import { IPostItem } from "./types";
 import { apiClient } from "../../utils/api/apiClient";
 import { Col, Row } from "antd";
@@ -7,6 +7,8 @@ import PostCard from "./PostCard";
 
 const PostListPage = () => {
     const { id } = useParams();
+    const [searchParams] = useSearchParams();
+    const categoryName = searchParams.get("categoryName");
 
     const [posts, setPosts] = useState<IPostItem[]>([]);
 
@@ -14,7 +16,6 @@ const PostListPage = () => {
         const fetchData = async () => {
             try {
                 const response = await apiClient.get<IPostItem[]>(`/api/posts/byCategoryId/${id}`);
-                console.log("response.data", response.data)
                 setPosts(response.data);
             } catch (error) {
                 console.error('Error fetching categories:', error);
@@ -26,7 +27,7 @@ const PostListPage = () => {
 
     return (
         <>
-            <h1>postListPage {id}</h1>
+            <h1>{categoryName}</h1>
 
             <Row gutter={16}>
                 <Col span={24}>
