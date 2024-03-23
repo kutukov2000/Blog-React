@@ -10,3 +10,8 @@ export interface ICategoryEdit{
     name: string;
     description: string;
 }
+
+export interface ICategoryCreate {
+    name: string;
+    description: string;
+}
