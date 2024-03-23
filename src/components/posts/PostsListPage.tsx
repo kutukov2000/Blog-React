@@ -1,11 +1,9 @@
 import { useEffect, useState } from "react";
-import { Link, useParams, useSearchParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 import { IPostItem } from "./types";
 import { apiClient } from "../../utils/api/apiClient";
-import { Button, Col, Row, Select, message } from "antd";
+import { Col, Row, Select, message } from "antd";
 import PostCard from "./PostCard";
-import { useAppSelector } from "../../hooks/redux";
-import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 
 const sortOptions = ['title', 'postedOn']
 
@@ -16,8 +14,6 @@ const PostListPage = () => {
 
     const [posts, setPosts] = useState<IPostItem[]>([]);
     const [sortBy, setSortBy] = useState<string>('postedOn');
-
-    const { isLogin } = useAppSelector(state => state.account);
 
     const sortedPosts = sortBy ? [...posts].sort((a, b) => {
         if (sortBy === 'title') {
@@ -71,30 +67,13 @@ const PostListPage = () => {
 
             <Row gutter={16}>
                 <Col span={24}>
-                    <Row>
+                    <Row style={{ display: 'flex', justifyContent: 'center' }}>
                         {sortedPosts.length === 0 ? (
                             <h2>Список пустий</h2>
                         ) : (
                             sortedPosts.map((post) =>
-                                <div style={{ width: '100%', margin: 10 }}>
-                                    <Link to={`../post/${post.id}/${post.urlSlug}`} style={{ width: '40%', margin: 10 }}>
-                                        <PostCard key={post.id} item={post} />
-                                    </Link>
-                                    {isLogin && (
-                                        <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-                                            <Link to={`../post/edit/${post.id}`}>
-                                                <Button
-                                                    icon={<EditOutlined />}
-                                                    style={{ borderColor: 'orange', color: 'orange' }}>
-                                                    Edit
-                                                </Button>
-                                            </Link>
-                                            <Button
-                                                onClick={() => handlePostDelete(post.id)}
-                                                icon={<DeleteOutlined />}
-                                                danger>Delete</Button>
-                                        </div>
-                                    )}
+                                <div style={{ width: '80%', margin: 10 }}>
+                                    <PostCard key={post.id} item={post} handlePostDelete={handlePostDelete} />
                                 </div>
                             )
                         )}
