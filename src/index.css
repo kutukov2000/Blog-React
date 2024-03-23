@@ -2,8 +2,15 @@ body {
   margin: 0;
 }
 
-#categoryCard {
+.card {
   padding: 10;
   width: 100%;
   max-width: 100% !important
+}
+
+.date {
+  font-size: smaller;
+  color: gray;
+  margin-top: 5px;
+  margin-bottom: 5px;
 }

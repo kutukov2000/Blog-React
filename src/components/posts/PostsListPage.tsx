@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { IPostItem } from "./types";
 import { apiClient } from "../../utils/api/apiClient";
 import { Col, Row } from "antd";
@@ -13,7 +13,7 @@ const PostListPage = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await apiClient.get<IPostItem[]>(`/api/posts/${id}`);
+                const response = await apiClient.get<IPostItem[]>(`/api/posts/byCategoryId/${id}`);
                 console.log("response.data", response.data)
                 setPosts(response.data);
             } catch (error) {
@@ -35,7 +35,9 @@ const PostListPage = () => {
                             <h2>Список пустий</h2>
                         ) : (
                             posts.map((post) =>
-                                <PostCard key={post.id} item={post} />
+                                <Link to={`../post/${post.id}/${post.urlSlug}`} style={{ width: '40%', margin: 10 }}>
+                                    <PostCard key={post.id} item={post} />
+                                </Link>
                             )
                         )}
                     </Row>

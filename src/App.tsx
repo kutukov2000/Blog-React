@@ -4,6 +4,7 @@ import Login from "./components/account/Login"
 import Register from "./components/account/Register"
 import CategoryListPage from "./components/categories/CategoriesListPage"
 import PostListPage from "./components/posts/PostsListPage"
+import PostPage from "./components/posts/PostPage"
 
 function App() {
   return (
@@ -17,6 +18,8 @@ function App() {
           <Route index element={<CategoryListPage />} />
           <Route path={"category/:id/:urlSlug"} element={<PostListPage />} />
 
+          <Route path={"post/:id/:urlSlug"} element={<PostPage />} />
+          
         </Route>
       </Routes>
     </>
