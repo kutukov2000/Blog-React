@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Form, Input, Button } from 'antd';
+import { Form, Input, Button, message } from 'antd';
 import { useParams } from 'react-router-dom';
 import { ICategoryEdit } from './types';
 import { apiClient } from '../../utils/api/apiClient';
@@ -22,6 +22,7 @@ const EditCategoryPage = () => {
                 form.setFieldsValue({ name: response.data?.name, description: response.data?.description })
             } catch (error) {
                 console.error('Error fetching category:', error);
+                message.error('Category fetching error');
             } finally {
                 setLoading(false);
             }
@@ -35,9 +36,11 @@ const EditCategoryPage = () => {
         const data = { ...values, id };
 
         try {
-            await apiClient.put('api/categories', data)
+            await apiClient.put('api/categories', data);
+            message.success('Category successfully edited!');
         } catch (error) {
             console.log('Error edit category:', error);
+            message.error('Category editing error');
         } finally {
             setLoading(false);
         }

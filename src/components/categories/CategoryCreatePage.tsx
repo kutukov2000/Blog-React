@@ -1,21 +1,27 @@
 import { useState } from 'react';
-import { Form, Input, Button } from 'antd';
+import { Form, Input, Button, message } from 'antd';
 import { ICategoryCreate } from './types';
 import { apiClient } from '../../utils/api/apiClient';
 import { useAppSelector } from '../../hooks/redux';
+import { useNavigate } from 'react-router-dom';
 
 const CategoryCreatePage = () => {
     const [loading, setLoading] = useState(false);
 
     const { isAdmin } = useAppSelector(state => state.account);
 
+    const navigate = useNavigate();
+
     const onFinish = async (data: ICategoryCreate) => {
         setLoading(true);
 
         try {
             await apiClient.post('api/categories', data)
+            message.success('Category successfully created');
+            navigate(-1);
         } catch (error) {
-            console.log('Error category creating:', error);
+            console.log('Category creating error: ', error);
+            message.error('Category creating error');
         } finally {
             setLoading(false);
         }

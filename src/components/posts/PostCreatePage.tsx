@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Form, Input, Button, Switch, Select } from 'antd';
+import { Form, Input, Button, Switch, Select, message } from 'antd';
 import { IPostCreate } from './types';
 import { ICategoryItem } from '../categories/types';
 import { apiClient } from '../../utils/api/apiClient';
@@ -20,7 +20,8 @@ const PostCreatePage = () => {
                 const response = await apiClient.get<ICategoryItem[]>('api/categories');
                 setCategories(response.data);
             } catch (error) {
-                console.error('Error fetching categories:', error);
+                console.error('Categories fetching error: ', error);
+                message.error('Categories fetching error');
             }
         };
 
@@ -31,9 +32,11 @@ const PostCreatePage = () => {
         setLoading(true);
         try {
             await apiClient.post('api/posts', data);
+            message.success('Post successfully created!');
             navigate('/');
         } catch (error) {
-            console.error('Error creating post:', error);
+            console.error('Error creating post: ', error);
+            message.error('Post creating error');
         } finally {
             setLoading(false);
         }

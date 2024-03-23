@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Form, Button, Select, Input, Switch } from 'antd';
+import { Form, Button, Select, Input, Switch, message } from 'antd';
 import { useNavigate, useParams } from 'react-router-dom';
 import { ICategoryItem } from '../categories/types';
 import { apiClient } from '../../utils/api/apiClient';
@@ -32,7 +32,8 @@ const PostEditPage = () => {
                     categoryId: postData.categoryId,
                 });
             } catch (error) {
-                console.error('Error fetching post:', error);
+                console.error('Post fetching error: ', error);
+                message.error('Post fetching error!');
             } finally {
                 setLoading(false);
             }
@@ -43,7 +44,8 @@ const PostEditPage = () => {
                 const response = await apiClient.get<ICategoryItem[]>('api/categories');
                 setCategories(response.data);
             } catch (error) {
-                console.error('Error fetching categories:', error);
+                console.error('Categories fetching error: ', error);
+                message.error('Categories fetching error!');
             }
         };
 
@@ -55,9 +57,11 @@ const PostEditPage = () => {
         setLoading(true);
         try {
             await apiClient.put(`api/posts/${id}`, data);
+            message.success('Post successfully edited!');
             navigate(-1);
         } catch (error) {
-            console.error('Error updating post:', error);
+            console.error('Post editing error: ', error);
+            message.error('Post editing error!');
         } finally {
             setLoading(false);
         }

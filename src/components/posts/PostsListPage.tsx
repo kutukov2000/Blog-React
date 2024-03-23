@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useParams, useSearchParams } from "react-router-dom";
 import { IPostItem } from "./types";
 import { apiClient } from "../../utils/api/apiClient";
-import { Button, Col, Row } from "antd";
+import { Button, Col, Row, message } from "antd";
 import PostCard from "./PostCard";
 import { useAppSelector } from "../../hooks/redux";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
@@ -33,8 +33,10 @@ const PostListPage = () => {
         try {
             await apiClient.delete(`api/posts/${postId}`);
             setPosts(prevPosts => prevPosts.filter(post => post.id !== postId));
+            message.success(`Post successfully deleted!`)
         } catch (error) {
             console.error('Error deleting post:', error);
+            message.error(`Post deleting error!`)
         }
     }
 

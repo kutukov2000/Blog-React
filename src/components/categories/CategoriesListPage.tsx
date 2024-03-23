@@ -1,4 +1,4 @@
-import { Button, Col, Row } from "antd";
+import { Button, Col, Row, message } from "antd";
 import { useEffect, useState } from "react";
 import CategoryCard from "./CategoryCard.tsx";
 import { ICategoryItem } from "./types.ts";
@@ -18,7 +18,8 @@ const CategoryListPage = () => {
                 const response = await apiClient.get<ICategoryItem[]>('api/categories');
                 setCategories(response.data);
             } catch (error) {
-                console.error('Error fetching categories:', error);
+                console.error('Categories fetching error:', error);
+                message.error('Categories fetching error');
             }
         };
 
@@ -30,7 +31,8 @@ const CategoryListPage = () => {
             await apiClient.delete(`api/categories/${categoryId}`);
             setCategories(prevCategories => prevCategories.filter(category => category.id !== categoryId));
         } catch (error) {
-            console.error('Error deleting categories:', error);
+            console.error('Category deleting error:', error);
+            message.error('Category deleting error');
         }
     }
 

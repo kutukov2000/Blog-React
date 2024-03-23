@@ -1,4 +1,4 @@
-import { Row, Col } from "antd";
+import { Row, Col, message } from "antd";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { apiClient } from "../../utils/api/apiClient";
@@ -15,7 +15,8 @@ const PostPage = () => {
                 const response = await apiClient.get<IPostItem>(`/api/posts/${id}`);
                 setPost(response.data);
             } catch (error) {
-                console.error('Error fetching categories:', error);
+                console.error('Post fetching error: ', error);
+                message.error('Post fetching error!');
             }
         };
 
