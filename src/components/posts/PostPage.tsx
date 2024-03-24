@@ -1,4 +1,4 @@
-import { Row, Col, message } from "antd";
+import { Row, Col, message, Tag, Flex } from "antd";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { apiClient } from "../../utils/api/apiClient";
@@ -33,6 +33,13 @@ const PostPage = () => {
                 <p className="date">Edited: {formatDate(post?.modified)}</p>
 
                 <p>{post?.description}</p>
+
+                <hr />
+                <Flex gap="4px 0" wrap="wrap">
+                    {post?.tags.map((tag) => (
+                        <Tag color="magenta">#{tag}</Tag>
+                    ))}
+                </Flex>
             </Col>
         </Row>
     );

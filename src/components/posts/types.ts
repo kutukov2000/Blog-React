@@ -9,6 +9,7 @@ export interface IPostItem {
     postedOn: string;
     modified: string;
     categoryId: number;
+    tags: string[];
 }
 
 export interface IPostCreate {
